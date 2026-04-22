@@ -1,0 +1,38 @@
+services:
+  service-a:
+    build:
+      context: ./services/service-a
+    container_name: mesh-service-a
+    environment:
+      PORT: 3001
+      SERVICE_NAME: service-a
+      SERVICE_VERSION: 1.0.0
+    ports:
+      - "3001:3001"
+
+  service-b:
+    build:
+      context: ./services/service-b
+    container_name: mesh-service-b
+    environment:
+      PORT: 3002
+      SERVICE_NAME: service-b
+      SERVICE_VERSION: 1.0.0
+    ports:
+      - "3002:3002"
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: mesh-gateway
+    depends_on:
+      - service-a
+      - service-b
+    environment:
+      PORT: 8080
+      SERVICE_A_URL: http://service-a:3001
+      SERVICE_B_URL: http://service-b:3002
+      RETRY_COUNT: 2
+      REQUEST_TIMEOUT_MS: 1500
+    ports:
+      - "8080:8080"

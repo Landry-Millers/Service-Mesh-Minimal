@@ -1,0 +1,10 @@
+flowchart LR
+  Client[Client / Postman]
+  GW[Gateway]
+  A[Service A]
+  B[Service B]
+
+  Client -->|GET /api/hello| GW
+  GW -->|Round-robin + retry| A
+  GW -->|Round-robin + retry| B
+  Client -->|GET /health| GW

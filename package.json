@@ -1,0 +1,22 @@
+{
+  "name": "service-mesh-minimal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mini projet Service Mesh Minimal",
+  "scripts": {
+    "bootstrap": "npm install --prefix gateway && npm install --prefix services/service-a && npm install --prefix services/service-b",
+    "start": "docker compose up --build",
+    "start:dev": "npm run dev --prefix gateway",
+    "test": "npm test --prefix gateway && npm test --prefix services/service-a && npm test --prefix services/service-b",
+    "lint": "npm run lint --prefix gateway && npm run lint --prefix services/service-a && npm run lint --prefix services/service-b",
+    "ci": "npm run lint && npm run test"
+  },
+  "keywords": [
+    "service-mesh",
+    "microservices",
+    "docker",
+    "ci-cd"
+  ],
+  "author": "",
+  "license": "MIT"
+}

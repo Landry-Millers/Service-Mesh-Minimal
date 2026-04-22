@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install all dependencies
+        run: npm run bootstrap
+
+      - name: Lint and test
+        run: npm run ci
+
+  docker-smoke:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and run stack
+        run: docker compose up -d --build
+
+      - name: Wait stack
+        run: sleep 10
+
+      - name: Smoke test gateway
+        run: curl --fail http://localhost:8080/health
+
+      - name: Stop stack
+        if: always()
+        run: docker compose down -v

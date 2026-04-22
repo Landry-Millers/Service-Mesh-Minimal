@@ -1,0 +1,66 @@
+{
+  "info": {
+    "name": "Service Mesh Minimal",
+    "_postman_id": "8f4bc0ad-6f5f-4f9e-9f90-83326d0f402d",
+    "description": "Collection de test du mini maillage de services",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Gateway Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Mesh Hello Through Gateway",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/hello",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "hello"]
+        }
+      }
+    },
+    {
+      "name": "Service A Direct",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3001/hello",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["hello"]
+        }
+      }
+    },
+    {
+      "name": "Service B Direct",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3002/hello",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["hello"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
