@@ -18,8 +18,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: Clean vendored dependencies from workspace
+        run: rm -rf gateway/node_modules services/service-a/node_modules services/service-b/node_modules
+
       - name: Install all dependencies
         run: npm run bootstrap
+
+      - name: Ensure eslint binary is executable
+        run: chmod +x gateway/node_modules/.bin/eslint services/service-a/node_modules/.bin/eslint services/service-b/node_modules/.bin/eslint
 
       - name: Lint and test
         run: npm run ci
